@@ -18,10 +18,6 @@ class Faq extends DataObject {
         'FaqPage' => 'FaqPage',
 		'FaqSection' => 'FaqSection',
     );
-	
-	private static $many_many = array(
-		'FaqTags' => 'FaqTag'
-	);
 		
 	private static $extensions = array(
 		"Versioned('Stage', 'Live')"
@@ -41,7 +37,6 @@ class Faq extends DataObject {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();  
 		$fields->removeByName('FaqPageID');
-		$fields->removeByName('FaqTags');
 		$fields->removeByName('SortOrder');
 		
 		$fields->addFieldToTab('Root.Main', new TextField('Question', 'Question'));		
@@ -54,15 +49,6 @@ class Faq extends DataObject {
 		$field = new DropdownField('FaqSectionID', 'Faq section', $map);
 		$field->setEmptyString('None');
 		$fields->addFieldToTab('Root.Main', $field, 'Question');
-		
-		// faq tags - has_many relation
-		$tagMap = FaqTag::get()
-			->sort('Title')
-			->map('ID', 'Title')
-			->toArray();
-		$tagsField = new ListboxField('FaqTags', 'Faq tags');
-		$tagsField->setMultiple(true)->setSource($tagMap);
-		$fields->addFieldToTab( 'Root.Main', $tagsField, 'Question' );
 		
 		return $fields;
 	}

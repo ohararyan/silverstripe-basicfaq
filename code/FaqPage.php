@@ -9,8 +9,7 @@ class FaqPage extends Page {
 	
 	public static $has_many = array(
 		'Faqs' => 'Faq',
-		'FaqSections' => 'FaqSection',
-		'FaqTags' => 'FaqTag',
+		'FaqSections' => 'FaqSection'
 	);
 	
 	/*
@@ -34,25 +33,8 @@ class FaqPage extends Page {
             $configTags
         );		
         $fields->addFieldToTab('Root.FaqSection', $faqSectionsField);
-		
-		$config = GridFieldConfig_RelationEditor::create();
-		$config->getComponentByType('GridFieldPaginator')->setItemsPerPage(10);
-		if (class_exists('GridFieldSortableRows'))
-			$config->addComponent(new GridFieldSortableRows('SortOrder'));
-		$config->getComponentByType('GridFieldAddNewButton')->setButtonName('Add a faq tag');
-		$config->getComponentByType('GridFieldDataColumns')->setDisplayFields(array(
-			'Title' => 'Title'
-		));
-		$faqTagField = new GridField(
-			'FaqTags', 
-			'FaqTags', 
-			$this->FaqTags(),
-			$config
-		);
-	
-		$fields->addFieldToTab('Root.FaqTags', $faqTagField);
-		
-		if(FaqSection::get()->count() > 0 && FaqTag::get()->count() > 0){
+				
+		if(FaqSection::get()->count() > 0){
 			$config = GridFieldConfig_RelationEditor::create();
 			$config->getComponentByType('GridFieldPaginator')->setItemsPerPage(10);
 			if (class_exists('GridFieldSortableRows'))
