@@ -102,13 +102,6 @@ class FaqPage extends Page {
 			$this->deleteVersionedObjects($this->FaqSections(), 'FaqSection', 'Live', $this->ID);
 		}
 		
-		if($this->FaqTags()) {
-			foreach($this->FaqTags() as $field) {
-				$field->publish('Stage', 'Live');
-			}
-			$this->deleteVersionedObjects($this->FaqTags(), 'FaqTag', 'Live', $this->ID);
-		}
-		
 		if($this->Faqs()) {
 			foreach($this->Faqs() as $field) {
 				$field->publish('Stage', 'Live');
